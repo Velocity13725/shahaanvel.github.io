@@ -8,149 +8,122 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💨</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Yantramanav:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --sky:#2f7bff; --deep:#0a2a9c; --ink:#07154d; --ring:#ffd23f; --red:#ff3b4e;
-  --paper:#fff8e6; --dirt:#b8743a; --tan:#e8b878; --radius:6px;
-}
+:root{--wc:#364d78;--red:#df001d;--silver:silver}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{font-family:'Rubik',system-ui,sans-serif;color:var(--paper);line-height:1.6;
-  background:var(--ink) linear-gradient(180deg,var(--sky) 0,var(--deep) 900px,var(--ink) 1800px) no-repeat;min-height:100vh}
+body{font-family:'Yantramanav',system-ui,sans-serif;color:#000;line-height:1.4;min-height:100vh;background:var(--wc)}
+/* the collage: put your saved image at assets/bg.jpg (the straw.page link is the backup) */
+body::before{content:"";position:fixed;inset:0;z-index:-1;
+  background:url(assets/bg.jpg) center/cover no-repeat,
+             url(https://assets.strawcdn.com/03874803-f2ca-4e26-8129-77ce41fb97a3-cd36e47a/7df41ffa195b662f9213.jpg) center/cover no-repeat,
+             var(--wc)}
 img{max-width:100%;display:block}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
-.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid #ff0;outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:24px 16px 40px}
 
-/* hero */
-.hero{position:relative;padding:72px 0 120px;overflow:hidden}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;
-  background:
-   linear-gradient(#3fae3f 0 14px,transparent 14px),
-   repeating-conic-gradient(var(--dirt) 0 25%,var(--tan) 0 50%) 0 14px/56px 56px;}
-.hero .wrap{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center}
-.hero h1{font-family:'Bungee',sans-serif;font-weight:400;font-size:clamp(2.6rem,9vw,5.6rem);line-height:.95;
-  transform:skewX(-8deg);text-shadow:4px 4px 0 var(--deep),8px 8px 0 rgba(7,21,77,.35);letter-spacing:.01em}
-.hero h1 span{display:block;color:var(--ring)}
-.hero p.sub{margin-top:22px;max-width:30em;font-size:1.1rem;color:#e4eeff}
-.hero p.sub b{color:var(--ring)}
-.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
-.btn{font-weight:700;text-decoration:none;padding:12px 22px;border-radius:999px;border:3px solid var(--ink);
-  background:var(--ring);color:var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--ink)}
-.btn.alt{background:var(--paper)}
-.mascot{width:min(240px,38vw);aspect-ratio:1;border-radius:50%;border:6px solid var(--ring);
-  box-shadow:0 0 0 6px var(--ink),0 0 50px rgba(255,210,63,.55);object-fit:cover;background:var(--deep)}
+/* win98 window, straight from the original page */
+.win{background:var(--silver);padding:2px;font-family:'VT323',monospace;font-size:1.3rem;line-height:1.1;text-align:left;
+  box-shadow:inset -1px -1px #0a0a0a,inset 1px 1px #dfdfdf,inset -2px -2px gray,inset 2px 2px #fff,4px 4px 0 rgba(0,0,0,.45)}
+.bar{background:var(--wc);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:3px 4px;gap:8px}
+.bar .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctl{display:flex;gap:2px;flex-shrink:0}
+.ctl b{display:block;width:20px;height:18px;background:#b9b8b8 center no-repeat;position:relative;
+  box-shadow:inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px gray,inset 2px 2px #dfdfdf}
+.ctl b:first-child::before{content:"";position:absolute;left:5px;right:5px;bottom:4px;height:2px;background:#0a0a0a}
+.ctl b:last-child{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z' fill='%23000'/%3E%3C/svg%3E")}
+.pad{padding:6px}
+.in{background:#fff;padding:8px 10px;box-shadow:inset 1px 1px #9b9a99,inset -1px -1px #fff,inset 2px 2px #9b9a99,inset -2px -2px #fff}
+.in p+p{margin-top:10px}
+.in p{font-size:1.4rem;line-height:1.05}
+.sunk{box-shadow:inset 1px 1px #9b9a99,inset -1px -1px #fff,inset 2px 2px #9b9a99,inset -2px -2px #fff;padding:3px;background:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;list-style:none;padding:0}
+.chips li{background:var(--silver);padding:1px 8px;font-size:1.2rem;
+  box-shadow:inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px gray,inset 2px 2px #dfdfdf}
+.btn98{all:unset;cursor:pointer;display:inline-block;background:var(--silver);padding:2px 12px;font-family:'VT323',monospace;font-size:1.25rem;color:#000;
+  box-shadow:inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px gray,inset 2px 2px #dfdfdf}
+.btn98:active{box-shadow:inset 1px 1px #0a0a0a,inset -1px -1px #fff,inset 2px 2px gray,inset -2px -2px #dfdfdf}
+.btn98:focus-visible{outline:2px dotted #000;outline-offset:-5px}
 
-/* windows */
-section{padding:56px 0 8px}
-h2{font-family:'Bungee',sans-serif;font-weight:400;font-size:1.9rem;margin-bottom:20px;letter-spacing:.02em}
-.win{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:var(--radius);
-  box-shadow:6px 6px 0 var(--ink);overflow:hidden}
-.bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--deep),var(--sky));
-  color:#fff;padding:6px 10px;font-weight:700;font-size:.9rem}
-.bar i{font-style:normal;display:flex;gap:5px}
-.bar i b{width:14px;height:14px;background:var(--paper);border:2px solid var(--ink);display:block}
-.win .body{padding:18px 20px}
-.win p+p{margin-top:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;list-style:none;padding:0}
-.chips li{background:var(--ink);color:var(--ring);padding:4px 12px;border-radius:999px;font-weight:500;font-size:.9rem}
+/* top */
+.top{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+h1{font-family:'VT323',monospace;font-weight:400;color:#fff;font-size:clamp(2.6rem,9vw,4.6rem);line-height:.9;
+  text-shadow:3px 3px 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000;margin-bottom:14px}
+.mascot{width:120px;height:120px;image-rendering:pixelated;object-fit:cover;background:var(--wc);padding:3px;
+  background:silver;box-shadow:inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px gray,inset 2px 2px #dfdfdf}
+.mascot img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
 
-/* music */
-.songs{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(14px,7vw,110px);align-items:start;padding:20px 0 50px}
-.songs .col{display:flex;flex-direction:column;gap:64px;position:relative;z-index:1}
+main{display:grid;gap:30px;margin-top:30px}
+.split{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:start}
+.gifs{columns:2 130px;column-gap:8px}
+.gifs img{width:100%;margin-bottom:8px;box-shadow:0 0 0 2px #9b9a99}
+
+/* music: diagonal criss-cross */
+.songs{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(12px,7vw,110px);align-items:start;padding:20px 0 50px}
+.songs .col{display:flex;flex-direction:column;gap:60px;position:relative;z-index:1}
 .songs .col.l{align-items:flex-end}
 .songs .col.r{align-items:flex-start;margin-top:170px}
 #trail{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
-#trail path{fill:none;stroke:var(--ring);stroke-width:4;stroke-dasharray:4 12;stroke-linecap:round;opacity:.85}
-.song{all:unset;box-sizing:border-box;cursor:pointer;background:var(--paper);color:var(--ink);border:3px solid var(--ink);
-  border-radius:var(--radius);box-shadow:5px 5px 0 var(--ink);padding:12px;display:grid;gap:10px;position:relative;
-  width:min(100%,250px);transition:transform .15s,box-shadow .15s}
+#trail path{fill:none;stroke:#fff;stroke-width:4;stroke-dasharray:3 11;stroke-linecap:round;filter:drop-shadow(1px 1px 0 #000)}
+.song{width:min(100%,240px);position:relative;transition:transform .15s}
 .songs .col.l .song{transform:rotate(-4deg)}
 .songs .col.r .song{transform:rotate(4deg)}
-.songs .col .song:hover,.songs .col .song:focus-visible{transform:rotate(0) scale(1.04);box-shadow:3px 3px 0 var(--ink)}
-.song:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
-.song .art{position:relative;aspect-ratio:1;background:var(--deep);border-radius:3px;overflow:hidden}
+.songs .col .song:hover,.songs .col .song.on{transform:rotate(0) scale(1.04);z-index:3}
+.song .art{position:relative;aspect-ratio:1;background:var(--wc);margin-bottom:6px}
 .song .art img{width:100%;height:100%;object-fit:cover}
-.song .play{position:absolute;right:8px;bottom:8px;width:40px;height:40px;border-radius:50%;background:var(--ring);
-  border:3px solid var(--ink);display:grid;place-items:center;font-size:14px;color:var(--ink)}
-.song strong{font-size:1rem;line-height:1.25}
-.song small{color:#4a5688}
-.song .tag{position:absolute;top:-12px;left:-8px;background:var(--red);color:#fff;font-weight:700;font-size:.75rem;
-  padding:3px 10px;border:3px solid var(--ink);transform:rotate(-4deg)}
-.song.on{background:var(--ring)}
-.song.on small{color:#5a4a00}
-.eq{display:none;gap:3px;align-items:flex-end;height:16px}
-.song.on .eq{display:flex}
-.eq s{width:4px;background:var(--ink);animation:eq .7s infinite alternate ease-in-out}
+.song h3{font-family:'VT323',monospace;font-weight:400;font-size:1.3rem;line-height:1}
+.song small{font-family:'VT323',monospace;font-size:1.1rem;color:#444;display:block;margin:2px 0 8px}
+.song.on .bar{background:var(--red)}
+.tuff{position:absolute;top:-30px;left:-14px;z-index:4;font-size:1.05rem;transform:rotate(-5deg);max-width:200px}
+.tuff .in{padding:2px 6px}
+.eq{display:inline-flex;gap:2px;align-items:flex-end;height:14px;margin-left:8px;vertical-align:middle;visibility:hidden}
+.song.on .eq{visibility:visible}
+.eq s{width:3px;background:#000;animation:eq .7s infinite alternate ease-in-out}
 .eq s:nth-child(2){animation-delay:.2s}.eq s:nth-child(3){animation-delay:.4s}
-@keyframes eq{from{height:3px}to{height:16px}}
+@keyframes eq{from{height:2px}to{height:14px}}
 
-/* gifs */
-.split{display:grid;grid-template-columns:1fr 1.1fr;gap:26px;align-items:start}
-.gifs{columns:2 140px;column-gap:12px}
-.gifs img{width:100%;margin-bottom:12px;border:3px solid var(--ink);border-radius:4px;background:var(--deep)}
-
-footer{padding:64px 0 48px;text-align:center;color:#b9c8ff;font-size:.9rem}
-#secret{all:unset;cursor:pointer;color:var(--ring);font-weight:700;border-bottom:2px dashed var(--ring)}
-#secret:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
+footer{display:flex;justify-content:center;padding-top:10px}
+footer .win{min-width:220px}
 
 @media (max-width:700px){
-  .hero .wrap{grid-template-columns:1fr}
-  .mascot{order:-1;width:150px}
-  .grid2,.split{grid-template-columns:1fr}
+  .top,.split{grid-template-columns:1fr}
+  .mascot{width:90px;height:90px}
   .songs .col.r{margin-top:110px}
   .songs .col{gap:44px}
-  .song strong{font-size:.9rem}
+  .tuff{max-width:150px}
 }
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .eq s{animation:none;height:10px}
-  .btn,.song{transition:none}
-  .songs .col .song:hover{transform:rotate(0)}
+  html{scroll-behavior:auto}.eq s{animation:none;height:8px}.song{transition:none}
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header class="hero">
-  <div class="wrap">
-    <div>
-      <h1>Shahaan<span>Velocity</span></h1>
-      <p class="sub">Hallooo, I’m Shahaan (aka <b>ShahaanVel</b>). You probably found me through Discord, so uh, yeah. Welcome in.</p>
-      <div class="cta">
-        <a class="btn" href="#music">Hear my music taste</a>
-        <a class="btn alt" href="#stuff">Tuff stuff</a>
+  <header>
+    <h1>ShahaanVelocity</h1>
+    <div class="top">
+      <div class="mascot"><img src="assets/qlhTFKINgopz608oMa.gif" alt="Sonic gif" onerror="this.parentNode.style.display='none'"></div>
+      <div class="win">
+        <div class="bar"><span class="t">HII.txt</span><span class="ctl"><b></b><b></b></span></div>
+        <div class="pad"><div class="in">
+          <p>Hallooo my name is Shahaan (aka ShahaanVelocity OR ShahaanVel) you prob found me thru discord soo uh yeah</p>
+        </div></div>
       </div>
     </div>
-    <img class="mascot" src="assets/qlhTFKINgopz608oMa.gif" alt="Sonic gif" onerror="this.style.display='none'">
-  </div>
-</header>
+  </header>
 
-<main class="wrap">
-  <section id="about">
-    <div class="win">
-      <div class="bar">HII.txt <i><b></b><b></b></i></div>
-      <div class="body">
-        <p>I love Sonic. Programming too, and I fix computers for friends and family because they can’t do it themselves :/</p>
-        <ul class="chips">
-          <li>Programming</li><li>PC hardware</li><li>Minecraft servers</li><li>Roblox Lua</li><li>Blender</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="win" id="stuff" style="margin-top:30px">
-      <div class="bar">Tuff stuff.json <i><b></b><b></b></i></div>
-      <div class="body">
+  <main>
+    <div class="win" id="stuff">
+      <div class="bar"><span class="t">Tuff stuff.json</span><span class="ctl"><b></b><b></b></span></div>
+      <div class="pad"><div class="in">
         <div class="split">
           <div>
-            <p>I love ALL the Sonic games, yes even ’06 and Forces. The lore is tuff and they’re just cool.</p>
-            <p>I also watch Marvel movies like I’m watching all of them. Favorite Avengers: Spider-Man and Iron Man (but Tony is dead :( ).</p>
-            <ul class="chips">
-              <li>Sonic</li><li>Roblox: Outcome Memories</li><li>Roblox: Doors</li><li>Minecraft</li><li>Fortnite</li><li>Don’t Starve Together</li><li>FNAF</li>
-            </ul>
+            <p>I LOVEEEEE SONICCC THEHEHEHE HEDGEHOOGOGOGOGG cuz bro he is tuff af.</p>
+            <p>I also enjoy other stuff such as programming and helping my friends and family fix their computer-related issues cuz they can’t do it themselves :/.</p>
+            <p>I loveeeee video games ofc including ALL of the sonic the hedgehog video games (yes even ’06 and forces) since they have tuff lore and are js cool. The other games I like are Roblox (Outcome Memories n Doors), Minecraft, Fortnite and Don’t Starve Together. AND FNAF TOOO (and i mean if it counts Sonic.EXE stuff tooo.)</p>
+            <p>Also I LOVE watching Marvel Movies like I’m lwk watching all of them. ALSO my fav avengers are def Spider-Man and Iron Man but ofc Tony is dead :(</p>
           </div>
           <div class="gifs">
             <img loading="lazy" src="assets/CQvlOKwH.gif" alt="" onerror="this.remove()">
@@ -163,28 +136,34 @@ footer{padding:64px 0 48px;text-align:center;color:#b9c8ff;font-size:.9rem}
             <img loading="lazy" src="assets/f573a7a652672de6c873.gif" alt="" onerror="this.remove()">
           </div>
         </div>
-      </div>
+      </div></div>
     </div>
-  </section>
 
-  <section id="music">
-    <h2>Moosic.mp3</h2>
-    <p style="margin-bottom:26px">I have the best music taste of them all, trust me. (Yes, most of it is Sonic-related.) Tap a song for a 30-second preview.</p>
-    <div class="songs" id="songs"><svg id="trail" aria-hidden="true"><path d=""/></svg><div class="col l"></div><div class="col r"></div></div>
-  </section>
-
+    <section id="music">
+      <div class="win">
+        <div class="bar"><span class="t">Moosic.mp3</span><span class="ctl"><b></b><b></b></span></div>
+        <div class="pad"><div class="in"><p>I have the best music taste of them all trust me. (Yes most of the songs are sonik related)</p></div></div>
+      </div>
+      <div class="songs" id="songs"><svg id="trail" aria-hidden="true"><path d=""/></svg><div class="col l"></div><div class="col r"></div></div>
+    </section>
   </main>
 
-<footer>
-  <p>Made by Shahaan. <button id="secret" type="button">shhhhh.secret</button></p>
-  <p id="psst" hidden style="margin-top:10px;color:#fff">PSST. You found it. 🦔</p>
-</footer>
+  <footer>
+    <div class="win">
+      <div class="bar"><span class="t">shhhhh.secret</span><span class="ctl"><b></b><b></b></span></div>
+      <div class="pad"><div class="in" style="text-align:center">
+        <button class="btn98" id="secret" type="button">???</button>
+        <p id="psst" hidden>PSST</p>
+      </div></div>
+    </div>
+  </footer>
+</div>
 
 <script>
 const P='https://audio-ssl.itunes.apple.com/itunes-assets/';
 const songs=[
  ['Live & Learn','Crush 40','AudioPreview221/v4/7a/37/c7/7a37c723-16f9-2ea6-1888-f42c42f853c8/mzaf_6127225984985562872.plus.aac.p.m4a'],
- ['Reach for the Stars (Re-colors)','SEGA SOUND TEAM / Tomoya Ohtani','AudioPreview211/v4/1f/f6/dd/1ff6dd42-fb0a-e9f5-5f42-67e5f44746f0/mzaf_2641889572098032607.plus.aac.p.m4a','Best song ever'],
+ ['Reach for the Stars (Re-colors)','SEGA SOUND TEAM / Tomoya Ohtani','AudioPreview211/v4/1f/f6/dd/1ff6dd42-fb0a-e9f5-5f42-67e5f44746f0/mzaf_2641889572098032607.plus.aac.p.m4a',1],
  ['It’s Been So Long','The Living Tombstone','AudioPreview211/v4/d3/dc/97/d3dc977e-7556-8c56-0310-30cf1b391e8b/mzaf_7127402522511488925.plus.aac.p.m4a'],
  ['Oh Dam','LSPLASH','AudioPreview211/v4/11/36/5a/11365aae-98de-0ffb-31a9-39e8173b15f9/mzaf_16111888101095392130.plus.aac.p.m4a'],
  ['Infinite Amethyst (Snail’s House Remix)','Minecraft','AudioPreview221/v4/e4/a6/c1/e4a6c19e-8226-4534-f534-816cb5bcd232/mzaf_8044328215819297411.plus.aac.p.m4a'],
@@ -193,27 +172,28 @@ const songs=[
 ];
 const box=document.getElementById('songs');
 const cols=[box.querySelector('.col.l'),box.querySelector('.col.r')];
-const cards=[];
-let cur=null,curBtn=null;
+const cards=[];let cur=null,curCard=null;
 songs.forEach((s,i)=>{
-  const b=document.createElement('button');
-  b.className='song';b.type='button';
-  b.setAttribute('aria-label','Play '+s[0]+' by '+s[1]);
-  b.innerHTML=(s[3]?'<span class="tag">'+s[3]+'</span>':'')+
-   '<span class="art"><img src="assets/art'+(i+1)+'.jpg" alt="" onerror="this.style.display=\'none\'"><span class="play">▶</span></span>'+
-   '<strong></strong><small></small><span class="eq" aria-hidden="true"><s></s><s></s><s></s></span>';
-  b.querySelector('strong').textContent=s[0];
-  b.querySelector('small').textContent=s[1];
-  b.addEventListener('click',()=>{
-    if(curBtn===b&&cur&&!cur.paused){cur.pause();return}
+  const d=document.createElement('div');d.className='song';
+  d.innerHTML=(s[3]?'<div class="win tuff"><div class="bar"><span class="t">TUFF.txt</span></div><div class="in">BEST SONNGGGGG EVERRRRRRRRRRRRR</div></div>':'')+
+   '<div class="win"><div class="bar"><span class="t"></span><span class="ctl"><b></b><b></b></span></div>'+
+   '<div class="pad"><div class="sunk"><div class="art"><img src="assets/art'+(i+1)+'.jpg" alt="" onerror="this.style.display=\'none\'"></div>'+
+   '<div class="in" style="box-shadow:none;padding:4px 6px 6px"><h3></h3><small></small><button class="btn98" type="button"><span class="ic">▶</span> Play<span class="eq" aria-hidden="true"><s></s><s></s><s></s></span></button></div></div></div></div>';
+  d.querySelector('.t').textContent=s[0]+'.mp3';
+  d.querySelector('h3').textContent=s[0];
+  d.querySelector('small').textContent=s[1];
+  const btn=d.querySelector('button');
+  btn.setAttribute('aria-label','Play '+s[0]+' by '+s[1]);
+  btn.addEventListener('click',()=>{
+    if(curCard===d&&cur&&!cur.paused){cur.pause();return}
     if(cur)cur.pause();
-    cur=new Audio(P+s[2]);curBtn=b;
-    const ui=()=>{document.querySelectorAll('.song').forEach(x=>{x.classList.remove('on');x.querySelector('.play').textContent='▶'});
-      if(!cur.paused){b.classList.add('on');b.querySelector('.play').textContent='❚❚'}};
+    cur=new Audio(P+s[2]);curCard=d;
+    const ui=()=>{cards.forEach(c=>{c.classList.remove('on');c.querySelector('.ic').textContent='▶'});
+      if(!cur.paused){d.classList.add('on');d.querySelector('.ic').textContent='❚❚'}};
     cur.addEventListener('play',ui);cur.addEventListener('pause',ui);cur.addEventListener('ended',ui);
     cur.play();
   });
-  cols[i%2].appendChild(b);cards.push(b);
+  cols[i%2].appendChild(d);cards.push(d);
 });
 function trail(){
   const r=box.getBoundingClientRect(),svg=document.getElementById('trail');
