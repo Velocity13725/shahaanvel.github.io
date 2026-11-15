@@ -240,7 +240,7 @@ start.onclick=e=>{e.stopPropagation();const h=menu.classList.toggle('gone');star
 document.addEventListener('click',e=>{if(!e.target.closest('#menu')){menu.classList.add('gone');start.classList.remove('open')}});
 function clock(){$('#clock').textContent=new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}clock();setInterval(clock,15000);
 /* ---------- anonymous questions -> email (FormSubmit, no name/email collected) ---------- */
-const ENDPOINT='https://formsubmit.co/ajax/mayeshadeen@gmail.com';
+const ENDPOINT='https://formsubmit.co/ajax/1c21693589112f4e36cca5572161bcb1';
 const q=$('#q'),st=$('#status'),sendBtn=$('#send');
 q.addEventListener('input',()=>{$('#cnt').textContent=q.value.length+' / 500'});
 function say(t,c){st.textContent=t;st.className=c||''}
