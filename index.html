@@ -136,6 +136,10 @@ footer .win{width:min(100%,440px)}
   .tab{flex-basis:90px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marq div{animation:none;padding-left:0}.song,.gifs img,.win{transition:none}}
+
+/* the hater button: good luck catching it */
+#hate-site{position:fixed;right:16px;bottom:52px;z-index:99;white-space:nowrap;touch-action:manipulation}
+@media(prefers-reduced-motion:reduce){#hate-site{transition:none}}
 </style>
 </head>
 <body>
@@ -216,6 +220,7 @@ footer .win{width:min(100%,440px)}
   <button role="menuitem" data-open="w-music">Moosic.mp3</button>
   <button role="menuitem" data-open="w-secret">shhhhh.secret</button>
 </div>
+<button class="btn98" id="hate-site" type="button" aria-label="Do you hate this website?">Do u hate this website? 🤨</button>
 <div class="task" role="toolbar" aria-label="Desktop taskbar">
   <button class="start" id="start" type="button" aria-haspopup="true"><span class="logo"><i></i><i></i><i></i><i></i></span>Start</button>
   <div class="tabs" id="tabs" aria-label="Open windows"></div>
@@ -309,6 +314,24 @@ songs.forEach((s,i)=>{
 function trail(){const r=box.getBoundingClientRect();$('#trail').setAttribute('viewBox','0 0 '+r.width+' '+r.height);
   $('#trail path').setAttribute('d',cards.map((c,i)=>{const q=c.getBoundingClientRect();return(i?'L':'M')+(q.left-r.left+q.width/2).toFixed(1)+' '+(q.top-r.top+q.height/2).toFixed(1)}).join(' '))}
 addEventListener('load',trail);addEventListener('resize',trail);$$('img',box).forEach(i=>i.addEventListener('load',trail));trail();
+
+/* ---------- evasive hater button ---------- */
+const hateBtn=$('#hate-site');
+hateBtn.addEventListener('pointerenter',e=>{
+  if(e.pointerType==='touch')return;
+  const pad=12, maxX=Math.max(pad,innerWidth-hateBtn.offsetWidth-pad);
+  const maxY=Math.max(pad,innerHeight-hateBtn.offsetHeight-44-pad);
+  const x=pad+Math.random()*(maxX-pad);
+  const y=pad+Math.random()*(maxY-pad);
+  hateBtn.style.left=x+'px';hateBtn.style.top=y+'px';
+  hateBtn.style.right='auto';hateBtn.style.bottom='auto';
+});
+hateBtn.addEventListener('click',()=>{
+  hateBtn.textContent='Too slow 😭';
+  hateBtn.style.left=Math.max(12,Math.random()*(innerWidth-hateBtn.offsetWidth-24))+'px';
+  hateBtn.style.top=Math.max(12,Math.random()*(innerHeight-hateBtn.offsetHeight-56))+'px';
+});
+
 focusWin($('#w-hii'));
 </script>
 </body>
