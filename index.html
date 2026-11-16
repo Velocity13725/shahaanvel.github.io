@@ -315,23 +315,40 @@ function trail(){const r=box.getBoundingClientRect();$('#trail').setAttribute('v
   $('#trail path').setAttribute('d',cards.map((c,i)=>{const q=c.getBoundingClientRect();return(i?'L':'M')+(q.left-r.left+q.width/2).toFixed(1)+' '+(q.top-r.top+q.height/2).toFixed(1)}).join(' '))}
 addEventListener('load',trail);addEventListener('resize',trail);$$('img',box).forEach(i=>i.addEventListener('load',trail));trail();
 
-/* ---------- evasive hater button ---------- */
+/* ---------- smoothly evasive hater button ---------- */
 const hateBtn=$('#hate-site');
-hateBtn.addEventListener('pointerenter',e=>{
+let hatePointer=null,hateFrame=0,hateX=null,hateY=null;
+function moveHater(){
+  if(!hatePointer){hateFrame=0;return}
+  const w=hateBtn.offsetWidth,h=hateBtn.offsetHeight;
+  const maxX=Math.max(8,innerWidth-w-8),maxY=Math.max(8,innerHeight-h-48);
+  if(hateX===null||hateY===null){
+    const r=hateBtn.getBoundingClientRect();hateX=r.left;hateY=r.top;
+  }
+  const cx=hateX+w/2,cy=hateY+h/2;
+  let dx=cx-hatePointer.x,dy=cy-hatePointer.y;
+  const distance=Math.hypot(dx,dy);
+  if(distance<190){
+    if(distance<1){dx=1;dy=0}
+    const strength=(190-distance)/190;
+    const speed=2.5+strength*8;
+    const len=Math.hypot(dx,dy)||1;
+    hateX=Math.max(8,Math.min(maxX,hateX+(dx/len)*speed));
+    hateY=Math.max(8,Math.min(maxY,hateY+(dy/len)*speed));
+    hateBtn.style.left=hateX+'px';hateBtn.style.top=hateY+'px';
+    hateBtn.style.right='auto';hateBtn.style.bottom='auto';
+  }
+  hateFrame=requestAnimationFrame(moveHater);
+}
+document.addEventListener('pointermove',e=>{
   if(e.pointerType==='touch')return;
-  const pad=12, maxX=Math.max(pad,innerWidth-hateBtn.offsetWidth-pad);
-  const maxY=Math.max(pad,innerHeight-hateBtn.offsetHeight-44-pad);
-  const x=pad+Math.random()*(maxX-pad);
-  const y=pad+Math.random()*(maxY-pad);
-  hateBtn.style.left=x+'px';hateBtn.style.top=y+'px';
-  hateBtn.style.right='auto';hateBtn.style.bottom='auto';
+  hatePointer={x:e.clientX,y:e.clientY};
+  if(!hateFrame)hateFrame=requestAnimationFrame(moveHater);
 });
+document.addEventListener('pointerleave',()=>{hatePointer=null});
 hateBtn.addEventListener('click',()=>{
   hateBtn.textContent='Too slow 😭';
-  hateBtn.style.left=Math.max(12,Math.random()*(innerWidth-hateBtn.offsetWidth-24))+'px';
-  hateBtn.style.top=Math.max(12,Math.random()*(innerHeight-hateBtn.offsetHeight-56))+'px';
 });
-
 focusWin($('#w-hii'));
 </script>
 </body>
