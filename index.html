@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShahaanVelocity</title>
 <meta name="description" content="Shahaan (ShahaanVelocity / ShahaanVel): Sonic fan, programmer, PC fixer.">
+<meta name="theme-color" content="#008080">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ShahaanVelocity">
+<meta property="og:description" content="A little corner of the internet — Sonic, games, programming and more.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💨</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,10 +28,12 @@ body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0 1px,transparent 1px 3px)}
 img{max-width:100%;display:block}
 :focus-visible{outline:3px solid #ff0;outline-offset:2px}
+.skip{position:fixed;top:8px;left:8px;z-index:120;transform:translateY(-160%);background:#fff;color:#000;padding:8px 12px;box-shadow:var(--bev);font-family:"VT323",monospace;font-size:1.2rem}.skip:focus{transform:translateY(0)}
 .wrap{max-width:960px;margin:0 auto;padding:22px 16px 40px}
 
 /* windows */
 .win{background:var(--silver);padding:2px;font-family:'VT323',monospace;font-size:1.3rem;line-height:1.1;box-shadow:var(--bev),5px 5px 0 rgba(0,0,0,.5)}
+.win{transition:box-shadow .15s ease}.win.act{box-shadow:var(--bev),6px 6px 0 rgba(0,0,0,.55)}
 .bar{background:var(--wc);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:3px 4px;gap:8px;user-select:none}
 .bar .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ctl{display:flex;gap:2px;flex-shrink:0}
@@ -121,16 +127,19 @@ footer .win{width:min(100%,440px)}
 
 @media (min-width:1180px){.icons{display:flex}}
 @media (max-width:700px){
+  .task{gap:4px;padding:4px}.start{padding:1px 7px;gap:4px}.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{flex:1 0 72px;max-width:100px;padding:0 5px;font-size:1.05rem}.clock{padding:0 6px;font-size:1.05rem}
+  .songs{column-gap:10px;padding:20px 0 34px}.songs .col.r{margin-top:105px}.songs .col{gap:48px}.song{width:min(100%,220px)}
   .top,.split{grid-template-columns:1fr}
   .mascot{width:90px;height:90px}
   .songs .col.r{margin-top:120px}.songs .col{gap:50px}
   .tuff{max-width:150px}
   .tab{flex-basis:90px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marq div{animation:none;padding-left:0}.song,.gifs img{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marq div{animation:none;padding-left:0}.song,.gifs img,.win{transition:none}}
 </style>
 </head>
 <body>
+<a class="skip" href="#main-content">Skip to content</a>
 
 <nav class="icons" aria-label="Desktop">
   <button class="ico" data-open="w-stuff"><b>📁</b><span>Tuff stuff.json</span></button>
@@ -154,7 +163,7 @@ footer .win{width:min(100%,440px)}
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <div class="win drag" id="w-stuff" data-title="Tuff stuff.json">
       <div class="bar"><span class="t">Tuff stuff.json</span><span class="ctl"><b></b><b></b></span></div>
       <div class="pad"><div class="in"><div class="split">
@@ -194,7 +203,7 @@ footer .win{width:min(100%,440px)}
         <label for="q" class="gone">Your question</label>
         <textarea id="q" name="message" maxlength="500" placeholder="Ask me anything! (ayo verity ref)"></textarea>
         <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="row"><small id="cnt">0 / 500</small><button class="btn98" id="send" type="submit">Send anonymously ✍️🤫</button></div>
+        <div class="row"><small id="cnt" aria-live="polite">0 / 500</small><button class="btn98" id="send" type="submit">Send anonymously ✍️🤫</button></div>
         <div id="status" role="status" aria-live="polite"></div>
       </form></div>
     </div>
@@ -207,9 +216,9 @@ footer .win{width:min(100%,440px)}
   <button role="menuitem" data-open="w-music">Moosic.mp3</button>
   <button role="menuitem" data-open="w-secret">shhhhh.secret</button>
 </div>
-<div class="task">
+<div class="task" role="toolbar" aria-label="Desktop taskbar">
   <button class="start" id="start" type="button" aria-haspopup="true"><span class="logo"><i></i><i></i><i></i><i></i></span>Start</button>
-  <div class="tabs" id="tabs"></div>
+  <div class="tabs" id="tabs" aria-label="Open windows"></div>
   <div class="clock" id="clock">12:00 AM</div>
 </div>
 
@@ -256,7 +265,7 @@ $('#ask').addEventListener('submit',async e=>{
     const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
       body:JSON.stringify({message:msg,_subject:'New anonymous question (shahaanvelocity)',_template:'box',_captcha:'false'})});
     const j=await r.json().catch(()=>({}));
-    if(!r.ok||j.success==='false')throw 0;
+    if(!r.ok||j.success===false||j.success==='false')throw 0;
     try{localStorage.setItem('askT',Date.now())}catch(_){}
     q.value='';$('#cnt').textContent='0 / 500';say('Sent! Shahaan will see it. 🤫','ok');
   }catch(_){say('Didn’t send. Try again in a minute.','err')}
@@ -293,7 +302,7 @@ songs.forEach((s,i)=>{
   const ui=()=>{const p=!au.paused;d.classList.toggle('on',p);ic.textContent=p?'❚❚':'▶'};
   au.addEventListener('play',ui);au.addEventListener('pause',ui);au.addEventListener('ended',()=>{ui();th.style.left='0'});
   au.addEventListener('timeupdate',()=>{if(au.duration)th.style.left=au.currentTime/au.duration*100+'%'});
-  btn.onclick=()=>{if(au.paused){cards.forEach(c=>c._au!==au&&c._au.pause());au.play()}else au.pause()};
+  btn.onclick=()=>{if(au.paused){cards.forEach(c=>c._au!==au&&c._au.pause());au.play().catch(()=>{ic.textContent='!';btn.title='This audio preview could not be loaded.'})}else au.pause()};
   line.onclick=e=>{if(au.duration){const r=line.getBoundingClientRect();au.currentTime=(e.clientX-r.left)/r.width*au.duration}};
   cols[i%2].appendChild(d);cards.push(d);
 });
