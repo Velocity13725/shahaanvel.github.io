@@ -315,26 +315,33 @@ function trail(){const r=box.getBoundingClientRect();$('#trail').setAttribute('v
   $('#trail path').setAttribute('d',cards.map((c,i)=>{const q=c.getBoundingClientRect();return(i?'L':'M')+(q.left-r.left+q.width/2).toFixed(1)+' '+(q.top-r.top+q.height/2).toFixed(1)}).join(' '))}
 addEventListener('load',trail);addEventListener('resize',trail);$$('img',box).forEach(i=>i.addEventListener('load',trail));trail();
 
-/* ---------- smoothly evasive hater button ---------- */
+/* ---------- edge-aware evasive hater button ---------- */
 const hateBtn=$('#hate-site');
 let hatePointer=null,hateFrame=0,hateX=null,hateY=null;
 function moveHater(){
   if(!hatePointer){hateFrame=0;return}
   const w=hateBtn.offsetWidth,h=hateBtn.offsetHeight;
-  const maxX=Math.max(8,innerWidth-w-8),maxY=Math.max(8,innerHeight-h-48);
+  const pad=10,taskbarSpace=48;
+  const maxX=Math.max(pad,innerWidth-w-pad),maxY=Math.max(pad,innerHeight-h-taskbarSpace);
   if(hateX===null||hateY===null){
     const r=hateBtn.getBoundingClientRect();hateX=r.left;hateY=r.top;
   }
   const cx=hateX+w/2,cy=hateY+h/2;
   let dx=cx-hatePointer.x,dy=cy-hatePointer.y;
   const distance=Math.hypot(dx,dy);
-  if(distance<190){
-    if(distance<1){dx=1;dy=0}
-    const strength=(190-distance)/190;
-    const speed=2.5+strength*8;
-    const len=Math.hypot(dx,dy)||1;
-    hateX=Math.max(8,Math.min(maxX,hateX+(dx/len)*speed));
-    hateY=Math.max(8,Math.min(maxY,hateY+(dy/len)*speed));
+  if(distance<230){
+    const proximity=(230-distance)/230;
+    // Repel the cursor, then add an inward force near each screen edge.
+    let vx=(dx/(distance||1))*1.25,vy=(dy/(distance||1))*1.25;
+    const edgeRange=115;
+    if(hateX<edgeRange)vx+=(1-hateX/edgeRange)*2.4;
+    if(maxX-hateX<edgeRange)vx-=(1-(maxX-hateX)/edgeRange)*2.4;
+    if(hateY<edgeRange)vy+=(1-hateY/edgeRange)*2.4;
+    if(maxY-hateY<edgeRange)vy-=(1-(maxY-hateY)/edgeRange)*2.4;
+    const force=Math.hypot(vx,vy)||1;
+    const speed=2.8+proximity*8.5;
+    hateX=Math.max(pad,Math.min(maxX,hateX+(vx/force)*speed));
+    hateY=Math.max(pad,Math.min(maxY,hateY+(vy/force)*speed));
     hateBtn.style.left=hateX+'px';hateBtn.style.top=hateY+'px';
     hateBtn.style.right='auto';hateBtn.style.bottom='auto';
   }
